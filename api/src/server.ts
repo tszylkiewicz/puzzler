@@ -1,3 +1,4 @@
-import app from './app';
+import { App } from './app';
 
-app.listen(8080);
+const server = new App();
+server.start();
