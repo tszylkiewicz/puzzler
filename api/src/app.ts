@@ -24,7 +24,7 @@ export class App {
     }
 
     routes(): void {
-        this.server.use('/api/users', new UserRoutes().router);
+        this.server.use('/api/users/v1', new UserRoutes().router);
     }
 
     mongo(): void {
