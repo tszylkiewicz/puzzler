@@ -39,7 +39,10 @@ describe('save', () => {
     })
 
     it('should not save user with invalid email', async () => {
-        const user1 = new User({ email: 'email@em.o', userName: faker.name.firstName() })
+        const user1 = new User({
+            email: 'email@em.o',
+            userName: faker.name.firstName(),
+        })
         await expect(user1.save()).rejects.toThrowError(/Invalid email format/)
     })
 
@@ -54,5 +57,4 @@ describe('save', () => {
         const user2 = new User(userData)
         await expect(user2.save()).rejects.toThrowError(/E11000/)
     })
-
 })

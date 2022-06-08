@@ -1,16 +1,16 @@
-import { Router } from 'express';
-import { addUser, getUsers } from './controller/userController';
+import { Router } from 'express'
+import { addUser, getUsers } from './controller/userController'
 
 export class UserRoutes {
-    router: Router;
+    router: Router
 
     constructor() {
         this.router = Router()
-        this.routes();
+        this.routes()
     }
 
     routes(): void {
-        this.router.get('/', getUsers);
-        this.router.post('/', addUser);
+        this.router.get('/', getUsers)
+        this.router.post('/', addUser)
     }
 }

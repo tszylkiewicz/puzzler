@@ -1,17 +1,17 @@
-import { createServer } from './utils/server';
+import { createServer } from './utils/server'
 import db from './utils/db'
 import logger from './utils/logger'
 
-require("dotenv").config();
-const port = process.env.PORT;
+require('dotenv').config()
+const port = process.env.PORT
 
 db.open()
     .then(() => createServer())
-    .then(server => {
+    .then((server) => {
         server.listen(port, () => {
-            logger.info(`Server listening on port ${port}`);
-        });
+            logger.info(`Server listening on port ${port}`)
+        })
     })
-    .catch(err => {
+    .catch((err) => {
         logger.error(`Error: ${err}`)
     })

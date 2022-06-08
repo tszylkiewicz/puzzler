@@ -25,25 +25,21 @@ describe('POST /api/users/v1', () => {
             .post(`/api/users/v1`)
             .send({
                 email: faker.internet.email(),
-                userName: faker.name.firstName()
+                userName: faker.name.firstName(),
             })
             .expect(201)
 
         expect(response.body).toMatchObject({
-            userId: expect.stringMatching(/^[a-f0-9]{24}$/)
+            userId: expect.stringMatching(/^[a-f0-9]{24}$/),
         })
     })
-
 
     it('should return 409 & valid response for duplicated user', async () => {
         const data = {
             email: faker.internet.email(),
-            userName: faker.name.firstName()
+            userName: faker.name.firstName(),
         }
-        await request(server)
-            .post(`/api/users/v1`)
-            .send(data)
-            .expect(201)
+        await request(server).post(`/api/users/v1`).send(data).expect(201)
 
         const response = await request(server)
             .post(`/api/users/v1`)
@@ -53,10 +49,9 @@ describe('POST /api/users/v1', () => {
         expect(response.body).toMatchObject({
             error: {
                 type: 'account_already_exists',
-                message: expect.stringMatching(/already exists/)
-            }
+                message: expect.stringMatching(/already exists/),
+            },
         })
-
     })
 
     it('should return 400 & valid response for invalid request', async () => {
@@ -64,13 +59,13 @@ describe('POST /api/users/v1', () => {
             .post(`/api/users/v1`)
             .send({
                 email: faker.name.firstName(),
-                userName: faker.name.firstName()
+                userName: faker.name.firstName(),
             })
             .expect(400)
 
         expect(response.body).toMatchObject({
-            name: 'ValidationError', 
-            message: expect.stringMatching(/email/)
+            name: 'ValidationError',
+            message: expect.stringMatching(/email/),
         })
     })
 })

@@ -1,16 +1,15 @@
-import express from 'express';
-import morganBody from 'morgan-body';
-import { UserRoutes } from '../src/user/routes';
+import express from 'express'
+import morganBody from 'morgan-body'
+import { UserRoutes } from '../src/user/routes'
 
 export async function createServer(): Promise<any> {
+    const server = express()
 
-    const server = express();
-
-    server.use(express.json());
+    server.use(express.json())
 
     morganBody(server)
 
-    server.use('/api/users/v1', new UserRoutes().router);
+    server.use('/api/users/v1', new UserRoutes().router)
 
-    return server;
+    return server
 }
