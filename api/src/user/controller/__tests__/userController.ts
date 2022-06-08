@@ -5,8 +5,6 @@ import { Express } from 'express-serve-static-core'
 
 import db from '../../../../utils/db'
 import { createServer } from '../../../../utils/server'
-import * as mongoose from 'mongoose'
-import exp from 'constants'
 
 let server: Express
 
