@@ -8,25 +8,33 @@ const env = load({
     includeProcessEnv: true,
     silent: false,
     errorOnMissing: true,
-    errorOnExtra: true
+    errorOnExtra: true,
 })
 
 const parsedEnv = dotenvParseVariables(env)
 
-type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly'
+type LogLevel =
+    | 'silent'
+    | 'error'
+    | 'warn'
+    | 'info'
+    | 'http'
+    | 'verbose'
+    | 'debug'
+    | 'silly'
 
 interface Config {
     mongo: {
         url: string
-    },
+    }
     loggerLevel: LogLevel
 }
 
 const config: Config = {
     mongo: {
-        url: parsedEnv.MONGO_URL as string
+        url: parsedEnv.MONGO_URL as string,
     },
-    loggerLevel: parsedEnv.LOGGER_LEVEL as LogLevel
+    loggerLevel: parsedEnv.LOGGER_LEVEL as LogLevel,
 }
 
-export default config;
+export default config

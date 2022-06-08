@@ -1,4 +1,4 @@
-import { connect, connection, disconnect } from 'mongoose';
+import { connect, connection, disconnect } from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import config from '../src/config'
 import logger from '../utils/logger'
@@ -8,20 +8,20 @@ class MongoDBConnection {
 
     static getInstance(): MongoDBConnection {
         if (!MongoDBConnection._instance) {
-            MongoDBConnection._instance = new MongoDBConnection();
+            MongoDBConnection._instance = new MongoDBConnection()
         }
-        return MongoDBConnection._instance;
+        return MongoDBConnection._instance
     }
 
     public async open(): Promise<void> {
         try {
             if (config.mongo.url === 'inmemory') {
                 logger.info('Connecting to in memory Mongo DB')
-                this._mongoServer = await MongoMemoryServer.create();
-                connect(this._mongoServer.getUri(), { dbName: "puzzler" });
+                this._mongoServer = await MongoMemoryServer.create()
+                connect(this._mongoServer.getUri(), { dbName: 'puzzler' })
             } else {
                 logger.info(`Connecting to Mongo DB: ${config.mongo.url}`)
-                connect(config.mongo.url);
+                connect(config.mongo.url)
             }
 
             connection.on('connected', () => {
@@ -34,9 +34,9 @@ class MongoDBConnection {
 
             connection.on('error', (err) => {
                 logger.error(`Mongo:  ${String(err)}`)
-                if (err.name === "MongoNetworkError") {
+                if (err.name === 'MongoNetworkError') {
                     setTimeout(function () {
-                        connect(config.mongo.url).catch(() => { })
+                        connect(config.mongo.url).catch(() => {})
                     }, 5000)
                 }
             })
