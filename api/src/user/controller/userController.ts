@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import UserService, { ErrorResponse, CreateUserRequest } from '../service/userService'
-
+import logger from '../../../utils/logger'
 
 export function getUsers(req: Request, res: Response) {
     res.status(StatusCodes.OK);
@@ -25,7 +25,7 @@ export function addUser(req: Request, res: Response): void {
             }
         })
         .catch((err: any) => {
-            console.log(`createUser: ${err}`)
+            logger.error(`createUser: ${err}`)
             res.status(StatusCodes.BAD_REQUEST)
             res.send(err);
         })
