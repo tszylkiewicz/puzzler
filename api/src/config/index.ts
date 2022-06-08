@@ -13,16 +13,20 @@ const env = load({
 
 const parsedEnv = dotenvParseVariables(env)
 
+type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly'
+
 interface Config {
     mongo: {
         url: string
-    }
+    },
+    loggerLevel: LogLevel
 }
 
 const config: Config = {
     mongo: {
         url: parsedEnv.MONGO_URL as string
-    }
+    },
+    loggerLevel: parsedEnv.LOGGER_LEVEL as LogLevel
 }
 
 export default config;

@@ -1,6 +1,6 @@
 import { emit } from 'process';
 import User from '../model/user';
-
+import logger from '../../../utils/logger'
 
 export type ErrorResponse = { error: { type: string, message: string } }
 
@@ -28,7 +28,7 @@ function createUser(user: CreateUserRequest): Promise<CreateUserResponse> {
                 if (err.code === 11000) {
                     resolve({ error: { type: 'account_already_exists', message: `${user.email} already exists` } })
                 } else {
-                    console.log(`createUser: ${err}`)
+                    logger.error(`createUser: ${err}`)
                     reject(err)
                 }
             })
