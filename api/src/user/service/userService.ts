@@ -1,0 +1,38 @@
+import { emit } from 'process';
+import User from '../model/user';
+
+
+export type ErrorResponse = { error: { type: string, message: string } }
+
+export type CreateUserRequest = {
+    userName: string,
+    email: string
+}
+
+export type CreateUserResponse = {
+    userId: string
+} | ErrorResponse
+
+function getUser() {
+    return 'Hello users';
+};
+
+function createUser(user: CreateUserRequest): Promise<CreateUserResponse> {
+    return new Promise(function (resolve, reject) {
+        const newUser = new User({ userName: user.userName, email: user.email })
+        newUser.save()
+            .then(u => {
+                resolve({ userId: u._id.toString() })
+            })
+            .catch(err => {
+                if (err.code === 11000) {
+                    resolve({ error: { type: 'account_already_exists', message: `${user.email} already exists` } })
+                } else {
+                    console.log(`createUser: ${err}`)
+                    reject(err)
+                }
+            })
+    })
+};
+
+export default { createUser: createUser }
