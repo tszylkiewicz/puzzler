@@ -28,6 +28,9 @@ interface Config {
         url: string
     }
     loggerLevel: LogLevel
+    morganBody: {
+        enbabled: boolean
+    }
 }
 
 const config: Config = {
@@ -35,6 +38,9 @@ const config: Config = {
         url: parsedEnv.MONGO_URL as string,
     },
     loggerLevel: parsedEnv.LOGGER_LEVEL as LogLevel,
+    morganBody: {
+        enbabled: parsedEnv.MORGAN_BODY_ENABLED as boolean,
+    },
 }
 
 export default config

@@ -13,5 +13,7 @@ export class ProducerRoutes {
         this.router.get('/', ProducerController.getAllProducers)
         this.router.post('/', ProducerController.createProducer)
         this.router.get('/:producerId', ProducerController.getProducer)
+        this.router.put('/:producerId', ProducerController.updateProducer)
+        this.router.delete('/:producerId', ProducerController.deleteProducer)
     }
 }

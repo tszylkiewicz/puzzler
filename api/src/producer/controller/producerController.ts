@@ -1,17 +1,14 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import ProducerService from '../service/producerService'
-import logger from '../../../utils/logger'
 
 class ProducerController {
-    async getAllProducers(req: Request, res: Response) {
-        logger.info('Fetching all producers')
+    async getAllProducers(req: Request, res: Response): Promise<void> {
         const producers = await ProducerService.getProducers()
         res.status(StatusCodes.OK).send(producers)
     }
 
-    async getProducer(req: Request, res: Response) {
-        logger.info(`Fetching producer with id: ${req.body.id}`)
+    async getProducer(req: Request, res: Response): Promise<void> {
         const producer = await ProducerService.getProducerById(
             req.params.producerId
         )
@@ -22,10 +19,26 @@ class ProducerController {
         }
     }
 
-    async createProducer(req: Request, res: Response) {
-        logger.info('Creating new producer')
+    async createProducer(req: Request, res: Response): Promise<void> {
         const producerId = await ProducerService.createProducer(req.body)
         res.status(StatusCodes.CREATED).send(producerId)
+    }
+
+    async updateProducer(req: Request, res: Response): Promise<void> {
+        const udaptedProducer = await ProducerService.updateProducer(
+            req.params.producerId,
+            req.body
+        )
+        if (udaptedProducer === null) {
+            res.sendStatus(404)
+        } else {
+            res.status(StatusCodes.OK).send(udaptedProducer)
+        }
+    }
+
+    async deleteProducer(req: Request, res: Response): Promise<void> {
+        await ProducerService.deleteProducer(req.params.producerId)
+        res.status(StatusCodes.NO_CONTENT).send()
     }
 }
 
