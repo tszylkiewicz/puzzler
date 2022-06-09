@@ -1,7 +1,6 @@
 import User from '../model/user'
 import logger from '../../../utils/logger'
-
-export type ErrorResponse = { error: { type: string; message: string } }
+import { ErrorResponse } from '../../common/errorResponse'
 
 export type CreateUserRequest = {
     userName: string
