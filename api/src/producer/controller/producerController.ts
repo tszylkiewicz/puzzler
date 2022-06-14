@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 import ProducerService from '../service/producerService'
 
 class ProducerController {
-    async getAllProducers(req: Request, res: Response): Promise<void> {
+    async getAllProducers(_req: Request, res: Response): Promise<void> {
         const producers = await ProducerService.getProducers()
         res.status(StatusCodes.OK).send(producers)
     }
