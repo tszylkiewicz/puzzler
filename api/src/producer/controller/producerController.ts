@@ -1,6 +1,9 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import ProducerService from '../service/producerService'
+import { plainToClass } from 'class-transformer'
+import { validate } from 'class-validator'
+import { ProducerRequest } from '../dto/producerDto'
 
 class ProducerController {
     async getAllProducers(_req: Request, res: Response): Promise<void> {
