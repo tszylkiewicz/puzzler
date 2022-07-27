@@ -1,39 +1,33 @@
-import { Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
-import UserService, { CreateUserRequest } from '../service/userService'
-import logger from '../../../utils/logger'
-import { ErrorResponse } from '../../common/errorResponse'
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import UserService from '../service/userService';
+import logger from '../../../utils/logger';
+import { ErrorResponse } from '../../common/ErrorResponse';
+import { CreateUserRequest } from '../dto/UserDto';
 
-export function getUsers(req: Request, res: Response) {
-    res.status(StatusCodes.OK)
-    res.send('Hello world')
-}
-
-export function addUser(req: Request, res: Response): void {
+export async function addUser(req: Request, res: Response): Promise<void> {
     const request: CreateUserRequest = {
         userName: req.body.userName,
         email: req.body.email,
-    }
-    UserService.createUser(request)
-        .then((resp) => {
-            if ((resp as any).error) {
-                if (
-                    (resp as ErrorResponse).error.type ===
-                    'account_already_exists'
-                ) {
-                    res.status(StatusCodes.CONFLICT)
-                    res.json(resp)
-                } else {
-                    throw new Error(`unsupported ${resp}`)
-                }
+    };
+    try {
+        const resp = await UserService.createUser(request);
+        if ((resp as any).error) {
+            if (
+                (resp as ErrorResponse).error.type === 'account_already_exists'
+            ) {
+                res.status(StatusCodes.CONFLICT);
+                res.json(resp);
             } else {
-                res.status(StatusCodes.CREATED)
-                res.json(resp)
+                throw new Error(`unsupported ${resp}`);
             }
-        })
-        .catch((err) => {
-            logger.error(`createUser: ${err}`)
-            res.status(StatusCodes.BAD_REQUEST)
-            res.send(err)
-        })
+        } else {
+            res.status(StatusCodes.CREATED);
+            res.json(resp);
+        }
+    } catch (e) {
+        logger.error(`createUser: ${e}`);
+        res.status(StatusCodes.BAD_REQUEST);
+        res.send(e);
+    }
 }

@@ -1,22 +1,17 @@
-import { IsDefined, IsNotEmpty, IsString, IsUrl } from 'class-validator'
+import { IsDefined, IsNotEmpty, IsString, IsUrl } from 'class-validator';
 
 export class ProducerRequest {
     @IsDefined()
     @IsString()
     @IsNotEmpty()
-    name: string
+    name: string;
 
     @IsUrl()
-    logoUrl?: string
+    logoUrl?: string;
 }
-
-// export type ProducerRequest = {
-//     name: string
-//     logoUrl?: string
-// }
 
 export type ProducerDto = {
-    id: string
-    name: string
-    logoUrl?: string
-}
+    id: string;
+    name: string;
+    logoUrl?: string;
+};

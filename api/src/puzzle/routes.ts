@@ -1,16 +1,16 @@
-import { Router } from 'express'
-import PuzzleController from './controller/puzzleController'
+import { Router } from 'express';
+import { createPuzzle, getAllPuzzles } from './controller/puzzleController';
 
 export class PuzzleRoutes {
-    router: Router
+    router: Router;
 
     constructor() {
-        this.router = Router()
-        this.routes()
+        this.router = Router();
+        this.routes();
     }
 
     routes(): void {
-        this.router.get('/', PuzzleController.getAllProducers)
-        this.router.post('/', PuzzleController.createPuzzle)
+        this.router.get('/', getAllPuzzles);
+        this.router.post('/', createPuzzle);
     }
 }

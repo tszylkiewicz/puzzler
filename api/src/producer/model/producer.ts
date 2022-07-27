@@ -1,9 +1,9 @@
-import { Schema, model } from 'mongoose'
-import { IDocument } from '../../common/BaseDocument'
+import { model, Schema } from 'mongoose';
+import { BaseDocument } from '../../common/BaseDocument';
 
-export interface IProducer extends IDocument {
-    name: string
-    logoUrl?: string
+export interface IProducer extends BaseDocument {
+    name: string;
+    logoUrl?: string;
 }
 
 const ProducerSchema: Schema = new Schema<IProducer>({
@@ -22,6 +22,6 @@ const ProducerSchema: Schema = new Schema<IProducer>({
         type: Date,
         default: Date.now,
     },
-})
+});
 
-export default model<IProducer>('Producer', ProducerSchema)
+export default model<IProducer>('Producer', ProducerSchema);

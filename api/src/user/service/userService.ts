@@ -1,36 +1,35 @@
-import User from '../model/user'
-import logger from '../../../utils/logger'
-import { ErrorResponse } from '../../common/errorResponse'
+import User from '../model/user';
+import logger from '../../../utils/logger';
+import { CreateUserRequest, CreateUserResponse } from '../dto/UserDto';
 
-export type CreateUserRequest = {
-    userName: string
-    email: string
+class UserService {
+    async createUser(user: CreateUserRequest): Promise<CreateUserResponse> {
+        try {
+            const newUser = new User({
+                userName: user.userName,
+                email: user.email,
+            });
+            const createdUser = await newUser.save();
+            return { userId: createdUser._id.toString() };
+        } catch (e) {
+            if (e.code === 11000) {
+                return {
+                    error: {
+                        type: 'account_already_exists',
+                        message: `${user.email} already exists`,
+                    },
+                };
+            } else {
+                logger.error(`createUser: ${e}`);
+                return {
+                    error: {
+                        type: 'internal_error',
+                        message: e.message,
+                    },
+                };
+            }
+        }
+    }
 }
 
-export type CreateUserResponse = { userId: string } | ErrorResponse
-
-function createUser(user: CreateUserRequest): Promise<CreateUserResponse> {
-    return new Promise(function (resolve, reject) {
-        const newUser = new User({ userName: user.userName, email: user.email })
-        newUser
-            .save()
-            .then((u) => {
-                resolve({ userId: u._id.toString() })
-            })
-            .catch((err) => {
-                if (err.code === 11000) {
-                    resolve({
-                        error: {
-                            type: 'account_already_exists',
-                            message: `${user.email} already exists`,
-                        },
-                    })
-                } else {
-                    logger.error(`createUser: ${err}`)
-                    reject(err)
-                }
-            })
-    })
-}
-
-export default { createUser: createUser }
+export default new UserService();

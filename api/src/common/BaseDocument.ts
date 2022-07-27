@@ -1,6 +1,6 @@
-import { Document } from 'mongoose'
+import { Document } from 'mongoose';
 
-export interface IDocument extends Document {
-    createdAt: Date
-    updatedAt: Date
+export interface BaseDocument extends Document {
+    createdAt: Date;
+    updatedAt: Date;
 }

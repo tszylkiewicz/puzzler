@@ -1,10 +1,10 @@
-import { Schema, model } from 'mongoose'
-import { IDocument } from '../../common/BaseDocument'
-import validator from 'validator'
+import { model, Schema } from 'mongoose';
+import { BaseDocument } from '../../common/BaseDocument';
+import validator from 'validator';
 
-export interface IUser extends IDocument {
-    userName: string
-    email: string
+export interface IUser extends BaseDocument {
+    userName: string;
+    email: string;
 }
 
 const UserSchema: Schema = new Schema<IUser>({
@@ -27,6 +27,6 @@ const UserSchema: Schema = new Schema<IUser>({
         type: Date,
         default: Date.now,
     },
-})
+});
 
-export default model<IUser>('User', UserSchema)
+export default model<IUser>('User', UserSchema);

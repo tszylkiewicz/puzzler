@@ -1,15 +1,15 @@
-import { model, Schema } from 'mongoose'
-import { Dimension } from '../../common/dimension'
-import { IDocument } from '../../common/BaseDocument'
+import { model, Schema } from 'mongoose';
+import { Dimension } from '../../common/dimension';
+import { BaseDocument } from '../../common/BaseDocument';
 
-export interface IPuzzle extends IDocument {
-    title: string
-    producer: string
-    numberOfPieces: number
-    dimensions: Dimension
-    modelNumber: string
-    releaseDate: Date
-    recommendedAge: string
+export interface IPuzzle extends BaseDocument {
+    title: string;
+    producer: string;
+    numberOfPieces: number;
+    dimensions: Dimension;
+    modelNumber: string;
+    releaseDate: Date;
+    recommendedAge: string;
 }
 
 const PuzzleSchema: Schema = new Schema<IPuzzle>({
@@ -48,6 +48,6 @@ const PuzzleSchema: Schema = new Schema<IPuzzle>({
         type: Date,
         default: Date.now,
     },
-})
+});
 
-export default model<IPuzzle>('Puzzle', PuzzleSchema)
+export default model<IPuzzle>('Puzzle', PuzzleSchema);
